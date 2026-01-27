@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        contactListButton();
+        settingsButton();
+        mapButton();
     }
 
     private void contactListButton() {
@@ -85,6 +89,33 @@ public class MainActivity extends AppCompatActivity {
         EditText lastNameText = findViewById(R.id.editTextLastID);
         Button changeBirthButton = findViewById(R.id.changeBirthButtonID);
         Button saveButton = findViewById(R.id.saveButtonID);
+
+        emailText.setEnabled(enabled);
+        phoneText.setEnabled(enabled);
+        streetText.setEnabled(enabled);
+        cityText.setEnabled(enabled);
+        countryText.setEnabled(enabled);
+        zipText.setEnabled(enabled);
+        firstNameText.setEnabled(enabled);
+        lastNameText.setEnabled(enabled);
+        changeBirthButton.setEnabled(enabled);
+        saveButton.setEnabled(enabled);
+
+        if (enabled) {
+            firstNameText.requestFocus();
+        }
+
+    }
+    private void changeDateButton() {
+        Button changeDate = findViewById(R.id.changeBirthButtonID);
+        changeDate.setOnClickListener(new View.OnClickListener () {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getSupportFragmentManager();
+                DatePickerDialog datePickerDialog = new DatePickerDialog();
+                datePickerDialog.show(fm, "DatePick");
+            }
+        });
     }
 }
 
