@@ -63,38 +63,38 @@
 
     <ImageButton
         android:id="@+id/mapButtonID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="73dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@android:drawable/ic_dialog_map" />
 
     <ImageButton
         android:id="@+id/listButtonID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="73dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editSwitchID"
-        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="@+id/titleID"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@android:drawable/ic_menu_agenda" />
 
     <ImageButton
         android:id="@+id/settingButtonID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="73dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.819"
+        app:layout_constraintHorizontal_bias="0.94"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@android:drawable/ic_menu_manage" />
 
     <TextView
@@ -201,10 +201,10 @@
         android:layout_width="182dp"
         android:layout_height="44dp"
         android:ems="10"
+        android:hint="City"
         android:inputType="textPostalAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:hint="City"
         app:layout_constraintHorizontal_bias="0.078"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -215,8 +215,8 @@
         android:layout_width="182dp"
         android:layout_height="44dp"
         android:ems="10"
-        android:inputType="textPostalAddress"
         android:hint="Zip Code"
+        android:inputType="textPostalAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.078"
@@ -258,37 +258,69 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="phone"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="205dp" />
-
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Select Birth Date"
-        android:ems="10"
-        android:inputType="date"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="294dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.303" />
 
     <EditText
         android:id="@+id/editTextFirstID"
         android:layout_width="177dp"
         android:layout_height="50dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="106dp"
+        android:layout_marginEnd="215dp"
+        android:layout_marginBottom="575dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="first name"
-        tools:layout_editor_absoluteX="19dp"
-        tools:layout_editor_absoluteY="106dp" />
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextLastID"
         android:layout_width="177dp"
         android:layout_height="50dp"
+        android:layout_marginStart="218dp"
+        android:layout_marginTop="106dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="575dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="last name"
-        tools:layout_editor_absoluteX="218dp"
-        tools:layout_editor_absoluteY="106dp" />
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/changeBirthButtonID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.437" />
+
+    <TextView
+        android:id="@+id/birthViewID"
+        android:layout_width="229dp"
+        android:layout_height="44dp"
+        android:text="no birth date selected"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.435" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
