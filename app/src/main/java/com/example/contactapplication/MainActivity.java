@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +15,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Calendar;
+
+
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.SaveDateListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         contactListButton();
         settingsButton();
         mapButton();
+        changeDateButton();
+        editButton();
     }
 
     private void contactListButton() {
@@ -69,10 +75,12 @@ public class MainActivity extends AppCompatActivity {
     }
     private void editButton() {
         final Button editButton = findViewById(R.id.editSwitchID);
+        setForEditing(false);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setForEditing(editButton.isEnabled());
+                editButton.setSelected(!editButton.isSelected());
+                setForEditing(editButton.isSelected());
             }
         });
     }
@@ -92,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         emailText.setEnabled(enabled);
         phoneText.setEnabled(enabled);
+        stateText.setEnabled(enabled);
         streetText.setEnabled(enabled);
         cityText.setEnabled(enabled);
         countryText.setEnabled(enabled);
@@ -116,6 +125,16 @@ public class MainActivity extends AppCompatActivity {
                 datePickerDialog.show(fm, "DatePick");
             }
         });
+    }
+
+    @Override
+    public void didFinishDatePickerDialog(Calendar selectedTime) {
+        TextView birthdayText = findViewById(R.id.birthViewID);
+        String dateString = (selectedTime.get(Calendar.MONTH) + 1) + "/" +
+                selectedTime.get(Calendar.DAY_OF_MONTH) + "/" +
+                selectedTime.get(Calendar.YEAR);
+
+        birthdayText.setText(dateString);
     }
 }
 
