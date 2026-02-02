@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         mapButton();
         changeDateButton();
         editButton();
+        //saveContactButton();
     }
 
     private void contactListButton() {
@@ -136,6 +137,18 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         birthdayText.setText(dateString);
     }
+//in class testing
+//    private void saveContactButton() {
+//        Button saveContact = findViewById(R.id.saveButtonID);
+//        saveContact.setOnClickListener(new View.OnClickListener () {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+//                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//            }
+//        });
 }
+
 
 
