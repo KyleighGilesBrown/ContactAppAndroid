@@ -8,13 +8,13 @@ import android.util.Log;
 public class ContactDBHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "mycontacts.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String CREATE_TABLE_CONTACT =
             "create table contact (_id integer primary key autoincrement,"
             + "editTextFirstID text not null, editTextLastID text not null, editTextStrAddress text, "
             + "editTextCityAddress text, editTextStateAddress text, editTextZipAddress text, "
-            + "editTextPhone text"
-            + "editTextEmail text, birthViewID text, editTextCountryAddress text);";
+            + "editTextPhone text,"
+            + "editTextEmail text, birth text, editTextCountryAddress text);";
 
     public ContactDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

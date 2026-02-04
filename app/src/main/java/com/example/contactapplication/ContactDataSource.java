@@ -62,7 +62,7 @@ public class ContactDataSource {
             updateValues.put("editTextLastID", c.getEditTextLastID());
             updateValues.put("birth", String.valueOf(c.getBirth().getTimeInMillis()));
 
-            didSucceed = database.insert("contact", null, updateValues) > 0;
+            didSucceed = database.update("contact", updateValues, "contactID = " + rowId, null) > 0;
         }
         catch (Exception e) {
 

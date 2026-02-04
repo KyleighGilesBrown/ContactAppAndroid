@@ -1,5 +1,6 @@
 package com.example.contactapplication;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,9 +46,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         changeDateButton();
         editButton();
         saveContactButton();
-        initTextChangeEvents();
-        //hideKeyboard();
         currentContact = new Contact();
+
+        initTextChangeEvents();
+        hideKeyboard();
     }
 
     private void contactListButton() {
@@ -168,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         final EditText etStreetAddress = findViewById(R.id.editTextStrAddress);
         etStreetAddress.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                currentContact.setEditTextStrAddress(etContactFName.getText().toString());
+                currentContact.setEditTextStrAddress(etStreetAddress.getText().toString());
             }
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 
@@ -290,8 +292,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     ds.open();
                     if(currentContact.getContactID() == -1) {
                         wasSuccessful = ds.insertContact(currentContact);
+                        if (wasSuccessful){
                         int newId = ds.getLastContactID();
-                        currentContact.setContactID(newId);
+                        currentContact.setContactID(newId); }
                     }
                     else {
                         wasSuccessful = ds.updateContact(currentContact);
@@ -307,35 +310,34 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     Switch editSwitch = findViewById(R.id.editSwitchID);
                     editSwitch.toggle();
                     setForEditing(false);
-                   /// not sure if this is correct location
 
                 }
                 }
             });
         }
 
-//        private void hideKeyboard() {
-//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//        EditText editFName = findViewById(R.id.editTextFirstID);
-//        imm.hideSoftInputFromWindow(editFName.getWindowToken(),0);
-//        EditText editLName = findViewById(R.id.editTextLastID);
-//        imm.hideSoftInputFromWindow(editLName.getWindowToken(),0);
-//
-//            EditText editEmail = findViewById(R.id.editTextEmail);
-//            imm.hideSoftInputFromWindow(editEmail.getWindowToken(),0);
-//            EditText editPhone = findViewById(R.id.editTextPhone);
-//            imm.hideSoftInputFromWindow(editPhone.getWindowToken(),0);
-//            EditText editStr = findViewById(R.id.editTextStrAddress);
-//            imm.hideSoftInputFromWindow(editStr.getWindowToken(),0);
-//
-//            EditText editState = findViewById(R.id.editTextStateAddress);
-//            imm.hideSoftInputFromWindow(editState.getWindowToken(),0);
-//            EditText editCity = findViewById(R.id.editTextCityAddress);
-//            imm.hideSoftInputFromWindow(editCity.getWindowToken(),0);
-//            EditText editCountry = findViewById(R.id.editTextCountryAddress);
-//            imm.hideSoftInputFromWindow(editCountry.getWindowToken(),0);
-//            //not sure to include birthday here?
-//        }
+        private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        EditText editFName = findViewById(R.id.editTextFirstID);
+        imm.hideSoftInputFromWindow(editFName.getWindowToken(),0);
+        EditText editLName = findViewById(R.id.editTextLastID);
+        imm.hideSoftInputFromWindow(editLName.getWindowToken(),0);
+
+            EditText editEmail = findViewById(R.id.editTextEmail);
+            imm.hideSoftInputFromWindow(editEmail.getWindowToken(),0);
+            EditText editPhone = findViewById(R.id.editTextPhone);
+            imm.hideSoftInputFromWindow(editPhone.getWindowToken(),0);
+            EditText editStr = findViewById(R.id.editTextStrAddress);
+            imm.hideSoftInputFromWindow(editStr.getWindowToken(),0);
+
+            EditText editState = findViewById(R.id.editTextStateAddress);
+            imm.hideSoftInputFromWindow(editState.getWindowToken(),0);
+            EditText editCity = findViewById(R.id.editTextCityAddress);
+            imm.hideSoftInputFromWindow(editCity.getWindowToken(),0);
+            EditText editCountry = findViewById(R.id.editTextCountryAddress);
+            imm.hideSoftInputFromWindow(editCountry.getWindowToken(),0);
+            //not sure to include birthday here?
+        }
         }
 
 
