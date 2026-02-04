@@ -1,12 +1,19 @@
 package com.example.contactapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +22,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 
+
 import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.SaveDateListener {
-
+    private Contact currentContact;
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -35,7 +44,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         mapButton();
         changeDateButton();
         editButton();
-        //saveContactButton();
+        saveContactButton();
+        initTextChangeEvents();
+        //hideKeyboard();
+        currentContact = new Contact();
     }
 
     private void contactListButton() {
@@ -114,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         if (enabled) {
             firstNameText.requestFocus();
         }
-
     }
     private void changeDateButton() {
         Button changeDate = findViewById(R.id.changeBirthButtonID);
@@ -136,19 +147,197 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 selectedTime.get(Calendar.YEAR);
 
         birthdayText.setText(dateString);
+        currentContact.setBirth(selectedTime);
     }
-//in class testing
-//    private void saveContactButton() {
-//        Button saveContact = findViewById(R.id.saveButtonID);
-//        saveContact.setOnClickListener(new View.OnClickListener () {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-//                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//            }
-//        });
-}
+
+    private void initTextChangeEvents() {
+        final EditText etContactFName = findViewById(R.id.editTextFirstID);
+        etContactFName.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                currentContact.setEditTextFirstID(etContactFName.getText().toString());
+            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
+
+        final EditText etStreetAddress = findViewById(R.id.editTextStrAddress);
+        etStreetAddress.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                currentContact.setEditTextStrAddress(etContactFName.getText().toString());
+            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
+
+        final EditText etContactLName = findViewById(R.id.editTextLastID);
+            etContactLName.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) {
+                    currentContact.setEditTextLastID(etContactLName.getText().toString());
+                }
+                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+                }
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+            });
+        final EditText etZip = findViewById(R.id.editTextZipAddress);
+        etZip.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                currentContact.setEditTextZipAddress(etZip.getText().toString());
+            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
+        final EditText etCountry = findViewById(R.id.editTextCountryAddress);
+        etCountry.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                currentContact.setEditTextCountryAddress(etCountry.getText().toString());
+            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
+
+        final EditText etEmail = findViewById(R.id.editTextEmail);
+        etEmail.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                currentContact.setEditTextEmail(etEmail.getText().toString());
+            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
+
+        final EditText etPhoneNum = findViewById(R.id.editTextPhone);
+        etPhoneNum.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                currentContact.setEditTextPhone(etPhoneNum.getText().toString());
+            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
+        etPhoneNum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
+        final EditText etState = findViewById(R.id.editTextStateAddress);
+        etState.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                currentContact.setEditTextStateAddress(etState.getText().toString());
+            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
+        final EditText etCity = findViewById(R.id.editTextCityAddress);
+        etCity.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                currentContact.setEditTextCityAddress(etCity.getText().toString());
+            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
+
+
+
+
+    }
+    private void saveContactButton() {
+        Button saveContact = findViewById(R.id.saveButtonID);
+        saveContact.setOnClickListener(new View.OnClickListener () {
+            @Override
+            public void onClick(View view) {
+                boolean wasSuccessful;
+                ContactDataSource ds = new ContactDataSource(MainActivity.this);
+                try{
+                    ds.open();
+                    if(currentContact.getContactID() == -1) {
+                        wasSuccessful = ds.insertContact(currentContact);
+                        int newId = ds.getLastContactID();
+                        currentContact.setContactID(newId);
+                    }
+                    else {
+                        wasSuccessful = ds.updateContact(currentContact);
+
+                    }
+                    ds.close();
+
+                }
+                catch (Exception e){
+                    wasSuccessful = false;
+                }
+                if (wasSuccessful) {
+                    Switch editSwitch = findViewById(R.id.editSwitchID);
+                    editSwitch.toggle();
+                    setForEditing(false);
+                   /// not sure if this is correct location
+
+                }
+                }
+            });
+        }
+
+//        private void hideKeyboard() {
+//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        EditText editFName = findViewById(R.id.editTextFirstID);
+//        imm.hideSoftInputFromWindow(editFName.getWindowToken(),0);
+//        EditText editLName = findViewById(R.id.editTextLastID);
+//        imm.hideSoftInputFromWindow(editLName.getWindowToken(),0);
+//
+//            EditText editEmail = findViewById(R.id.editTextEmail);
+//            imm.hideSoftInputFromWindow(editEmail.getWindowToken(),0);
+//            EditText editPhone = findViewById(R.id.editTextPhone);
+//            imm.hideSoftInputFromWindow(editPhone.getWindowToken(),0);
+//            EditText editStr = findViewById(R.id.editTextStrAddress);
+//            imm.hideSoftInputFromWindow(editStr.getWindowToken(),0);
+//
+//            EditText editState = findViewById(R.id.editTextStateAddress);
+//            imm.hideSoftInputFromWindow(editState.getWindowToken(),0);
+//            EditText editCity = findViewById(R.id.editTextCityAddress);
+//            imm.hideSoftInputFromWindow(editCity.getWindowToken(),0);
+//            EditText editCountry = findViewById(R.id.editTextCountryAddress);
+//            imm.hideSoftInputFromWindow(editCountry.getWindowToken(),0);
+//            //not sure to include birthday here?
+//        }
+        }
+
 
 
 
