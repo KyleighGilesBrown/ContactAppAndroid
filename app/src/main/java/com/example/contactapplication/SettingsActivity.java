@@ -33,6 +33,8 @@ public class SettingsActivity extends AppCompatActivity {
         contactListButton();
         settingsButton();
         mapButton();
+        saveSettings();
+
         sortByClick();
         sortOrderClick();
     }
@@ -67,9 +69,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
     private void saveSettings() {
         String sortBy = getSharedPreferences("MySortingPreferences",
-                Context.MODE_PRIVATE).getString("group1ID", "radioNameID");
+                Context.MODE_PRIVATE).getString("sortBy", "radioNameID");
         String sortOrder = getSharedPreferences("MySortingPreferences",
-                Context.MODE_PRIVATE).getString("group2ID", "radioAscID");
+                Context.MODE_PRIVATE).getString("order", "radioAscID");
 
         RadioButton rbName = findViewById(R.id.radioNameID);
         RadioButton rbCity = findViewById(R.id.radioCityID);
@@ -101,32 +103,32 @@ public class SettingsActivity extends AppCompatActivity {
                     RadioButton rbCity = findViewById(R.id.radioCityID);
                     if (rbName.isChecked()) {
                         getSharedPreferences("MySortingPreferences", Context.MODE_PRIVATE)
-                                .edit().putString("group1ID", "radioNameID").apply();
+                                .edit().putString("sortBy", "radioNameID").apply();
                     } else if (rbCity.isChecked()) {
                         getSharedPreferences("MySortingPreferences",
                                 Context.MODE_PRIVATE)
-                                .edit().putString("group1ID", "radioCityID").apply();
+                                .edit().putString("sortBy", "radioCityID").apply();
                     } else {
                         getSharedPreferences("MySortingPreferences", Context.MODE_PRIVATE)
-                                .edit().putString("group1ID", "radioBirthdayID").apply();
+                                .edit().putString("sortBy", "radioBirthdayID").apply();
                     }
                 }
             });
         }
 
         private void sortOrderClick() {
-            RadioGroup rgSortBy = findViewById(R.id.group1ID);
+            RadioGroup rgSortBy = findViewById(R.id.group2ID);
             rgSortBy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(@NonNull RadioGroup radioGroup, int i) {
                     RadioButton asc = findViewById(R.id.radioAscID);
                     if (asc.isChecked()) {
                         getSharedPreferences("MySortingPreferences", Context.MODE_PRIVATE)
-                                .edit().putString("group2ID", "radioAscID").apply();
+                                .edit().putString("order", "radioAscID").apply();
 
                     } else {
                         getSharedPreferences("MySortingPreferences", Context.MODE_PRIVATE)
-                                .edit().putString("group2ID", "radioDescID").apply();
+                                .edit().putString("order", "radioDescID").apply();
                     }
                 }
             });
