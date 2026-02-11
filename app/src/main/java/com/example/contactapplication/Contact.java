@@ -13,7 +13,7 @@ public class Contact {
     private String editTextPhone;
     private String editTextFirstID;
 
-    private String editTextLastID;
+   // private String editTextLastID;
 
     private Calendar birth;
 
@@ -94,13 +94,13 @@ public class Contact {
         this.editTextFirstID = editTextFirstID;
     }
 
-    public String getEditTextLastID() {
-        return editTextLastID;
-    }
-
-    public void setEditTextLastID(String editTextLastID) {
-        this.editTextLastID = editTextLastID;
-    }
+   // public String getEditTextLastID() {
+//        return editTextLastID;
+//    }
+//
+//    public void setEditTextLastID(String editTextLastID) {
+//        this.editTextLastID = editTextLastID;
+//    }
 
     public Calendar getBirth() {
         return birth;

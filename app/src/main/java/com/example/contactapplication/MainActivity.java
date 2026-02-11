@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         mapButton();
         changeDateButton();
         editButton();
-        saveContactButton();
-        currentContact = new Contact();
 
+        currentContact = new Contact();
+        saveContactButton();
         initTextChangeEvents();
         hideKeyboard();
     }
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         EditText countryText = findViewById(R.id.editTextCountryAddress);
         EditText zipText = findViewById(R.id.editTextZipAddress);
         EditText firstNameText = findViewById(R.id.editTextFirstID);
-        EditText lastNameText = findViewById(R.id.editTextLastID);
+       // EditText lastNameText = findViewById(R.id.editTextLastID);
         Button changeBirthButton = findViewById(R.id.changeBirthButtonID);
         Button saveButton = findViewById(R.id.saveButtonID);
 
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         countryText.setEnabled(enabled);
         zipText.setEnabled(enabled);
         firstNameText.setEnabled(enabled);
-        lastNameText.setEnabled(enabled);
+       // lastNameText.setEnabled(enabled);
         changeBirthButton.setEnabled(enabled);
         saveButton.setEnabled(enabled);
 
@@ -181,19 +181,19 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         });
 
-        final EditText etContactLName = findViewById(R.id.editTextLastID);
-            etContactLName.addTextChangedListener(new TextWatcher() {
-                public void afterTextChanged(Editable s) {
-                    currentContact.setEditTextLastID(etContactLName.getText().toString());
-                }
-                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-
-                }
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-            });
+//        final EditText etContactLName = findViewById(R.id.editTextLastID);
+//            etContactLName.addTextChangedListener(new TextWatcher() {
+//                public void afterTextChanged(Editable s) {
+//                    currentContact.setEditTextLastID(etContactLName.getText().toString());
+//                }
+//                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+//
+//                }
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//                }
+//
+//            });
         final EditText etZip = findViewById(R.id.editTextZipAddress);
         etZip.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -320,8 +320,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         EditText editFName = findViewById(R.id.editTextFirstID);
         imm.hideSoftInputFromWindow(editFName.getWindowToken(),0);
-        EditText editLName = findViewById(R.id.editTextLastID);
-        imm.hideSoftInputFromWindow(editLName.getWindowToken(),0);
+//        EditText editLName = findViewById(R.id.editTextLastID);
+//        imm.hideSoftInputFromWindow(editLName.getWindowToken(),0);
 
             EditText editEmail = findViewById(R.id.editTextEmail);
             imm.hideSoftInputFromWindow(editEmail.getWindowToken(),0);

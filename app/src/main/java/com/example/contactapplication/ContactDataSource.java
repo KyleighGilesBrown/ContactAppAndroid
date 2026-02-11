@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ContactDataSource {
     private SQLiteDatabase database;
@@ -36,7 +37,7 @@ public class ContactDataSource {
             initialValues.put("editTextCountryAddress", c.getEditTextCountryAddress());
             initialValues.put("editTextPhone", c.getEditTextPhone());
             initialValues.put("editTextFirstID", c.getEditTextFirstID());
-            initialValues.put("editTextLastID", c.getEditTextLastID());
+           // initialValues.put("editTextLastID", c.getEditTextLastID());
             initialValues.put("birth", String.valueOf(c.getBirth().getTimeInMillis()));
 
             didSucceed = database.insert("contact", null, initialValues) > 0;
@@ -60,7 +61,7 @@ public class ContactDataSource {
             updateValues.put("editTextCountryAddress", c.getEditTextCountryAddress());
             updateValues.put("editTextPhone", c.getEditTextPhone());
             updateValues.put("editTextFirstID", c.getEditTextFirstID());
-            updateValues.put("editTextLastID", c.getEditTextLastID());
+            //updateValues.put("editTextLastID", c.getEditTextLastID());
             updateValues.put("birth", String.valueOf(c.getBirth().getTimeInMillis()));
 
             didSucceed = database.update("contact", updateValues, "contactID = " + rowId, null) > 0;
@@ -107,5 +108,40 @@ public class ContactDataSource {
         }
         return contactNames;
     }
-    }
+    public ArrayList<Contact> getContacts() {
+        ArrayList<Contact> contacts = new ArrayList<Contact> ();
+        try {
+            String query = "SELECT * FROM contact";
+            Cursor cursor = database.rawQuery(query, null);
+            Contact newContact;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                newContact = new Contact();
+                newContact.setContactID(cursor.getInt(0));
+                newContact.setEditTextFirstID(cursor.getString(1));
+                newContact.setEditTextStrAddress(cursor.getString(2));
+                newContact.setEditTextCityAddress(cursor.getString(3));
+                newContact.setEditTextStateAddress(cursor.getString(4));
+                newContact.setEditTextZipAddress(cursor.getString(5));
+                newContact.setEditTextPhone(cursor.getString(6));
+                newContact.setEditTextEmail(cursor.getString(7));
+                newContact.setEditTextCountryAddress(cursor.getString(9));
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(Long.valueOf(cursor.getString(8)));
+                newContact.setBirth(calendar);
+                contacts.add(newContact);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        catch (Exception e) {
+            contacts = new ArrayList<Contact>();
+        }
+        return contacts;
+
+
+            }
+        }
+
+
 

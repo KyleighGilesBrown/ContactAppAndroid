@@ -7,6 +7,25 @@
     android:layout_height="match_parent"
     tools:context=".ContactListActivity">
 
+    <TextView
+        android:id="@+id/titleListID"
+        style="@android:style/Widget.DeviceDefault.Light.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="#99A2A4"
+        android:fontFamily="@font/roboto"
+        android:shadowColor="#0D0B0B"
+        android:text="Contact List "
+        android:textAlignment="textStart"
+        android:textColor="#FFFCFC"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <ImageButton
         android:id="@+id/mapButtonID4"
         android:layout_width="90dp"
@@ -50,5 +69,6 @@
         app:layout_constraintBottom_toTopOf="@+id/mapButtonID4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.694" />
 </androidx.constraintlayout.widget.ConstraintLayout>

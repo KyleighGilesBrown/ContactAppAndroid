@@ -8,10 +8,12 @@ import android.util.Log;
 public class ContactDBHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "mycontacts.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String CREATE_TABLE_CONTACT =
             "create table contact (_id integer primary key autoincrement,"
-            + "editTextFirstID text not null, editTextLastID text not null, editTextStrAddress text, "
+            + "editTextFirstID text not null, " +
+                  //  "editTextLastID text not null, " +
+                    "editTextStrAddress text, "
             + "editTextCityAddress text, editTextStateAddress text, editTextZipAddress text, "
             + "editTextPhone text,"
             + "editTextEmail text, birth text, editTextCountryAddress text);";
