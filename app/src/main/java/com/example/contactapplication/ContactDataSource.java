@@ -64,7 +64,7 @@ public class ContactDataSource {
             //updateValues.put("editTextLastID", c.getEditTextLastID());
             updateValues.put("birth", String.valueOf(c.getBirth().getTimeInMillis()));
 
-            didSucceed = database.update("contact", updateValues, "contactID = " + rowId, null) > 0;
+            didSucceed = database.update("contact", updateValues, "_id = " + rowId, null) > 0;
         }
         catch (Exception e) {
 
@@ -140,6 +140,45 @@ public class ContactDataSource {
         return contacts;
 
 
+            }
+
+
+            public Contact getSpecificContact(int contactId) {
+                Contact contact = new Contact();
+                String query = "SELECT * FROM contact WHERE _id =" + contactId;
+                Cursor cursor = database.rawQuery(query,null);
+
+                if (cursor.moveToFirst()) {
+                    contact.setContactID(cursor. getInt(0));
+                    contact.setEditTextFirstID(cursor.getString(1));
+                    contact.setEditTextStrAddress(cursor.getString(2));
+                    contact.setEditTextCityAddress(cursor.getString(3));
+                    contact.setEditTextStateAddress(cursor.getString(4));
+                    contact.setEditTextZipAddress(cursor.getString(5));
+                    contact.setEditTextPhone(cursor.getString(6));
+                    contact.setEditTextEmail(cursor.getString(7));
+                    contact.setEditTextCountryAddress(cursor.getString(9));
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(Long.valueOf(cursor.getString(8)));
+                    contact.setBirth(calendar);
+
+                    cursor.close();
+
+
+                }
+                return contact;
+
+            }
+            public boolean deleteContact(int contactId) {
+                 boolean didDelete = false;
+                 try {
+                     didDelete = database.delete("contact", "_id=" + contactId, null) > 0;
+
+                 }
+                 catch (Exception e) {
+                     //nothing needed here
+                 }
+                 return didDelete;
             }
         }
 

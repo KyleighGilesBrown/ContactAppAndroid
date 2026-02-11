@@ -7,16 +7,20 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -46,10 +50,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         changeDateButton();
         editButton();
 
-        currentContact = new Contact();
         saveContactButton();
         initTextChangeEvents();
         hideKeyboard();
+        initDeleteSwitch();
     }
 
     private void contactListButton() {
@@ -90,7 +94,16 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
     private void editButton() {
         final Button editButton = findViewById(R.id.editSwitchID);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            initContact(extras.getInt("contactid"));
+
+        }
+        else {
+            currentContact = new Contact();
+        }
         setForEditing(false);
+
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -307,8 +320,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     wasSuccessful = false;
                 }
                 if (wasSuccessful) {
-                    Switch editSwitch = findViewById(R.id.editSwitchID);
-                    editSwitch.toggle();
+                    Button editButton = findViewById(R.id.editSwitchID);
+                    editButton.setSelected(!editButton.isSelected());
                     setForEditing(false);
 
                 }
@@ -338,6 +351,60 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             imm.hideSoftInputFromWindow(editCountry.getWindowToken(),0);
             //not sure to include birthday here?
         }
+
+        private void initContact(int id) {
+            ContactDataSource ds = new ContactDataSource(MainActivity.this);
+            try {
+                ds.open();
+                currentContact = ds.getSpecificContact(id);
+                ds.close();
+
+            }
+
+            catch(Exception e) {
+                Toast.makeText(this,"Load Contact Failed", Toast.LENGTH_LONG).show();
+
+            }
+
+            EditText editName = findViewById(R.id.editTextFirstID);
+            EditText editStrAddress = findViewById(R.id.editTextStrAddress);
+            EditText editCity = findViewById(R.id.editTextCityAddress);
+            EditText editState = findViewById(R.id.editTextStateAddress);
+            EditText editZipCode = findViewById(R.id.editTextZipAddress);
+            EditText editCountry = findViewById(R.id.editTextCountryAddress);
+            EditText editPhone = findViewById(R.id.editTextPhone);
+            EditText editEmail = findViewById(R.id.editTextEmail);
+            TextView birthday = findViewById(R.id.birthViewID);
+
+            editName.setText(currentContact.getEditTextFirstID());
+            editStrAddress.setText(currentContact.getEditTextStrAddress());
+            editCity.setText(currentContact.getEditTextCityAddress());
+            editState.setText(currentContact.getEditTextStateAddress());
+            editZipCode.setText(currentContact.getEditTextZipAddress());
+            editCountry.setText(currentContact.getEditTextCountryAddress());
+            editPhone.setText(currentContact.getEditTextPhone());
+            editEmail.setText(currentContact.getEditTextEmail());
+            birthday.setText(DateFormat.format("MM/dd/yyyy", currentContact.getBirth().getTimeInMillis()).toString());
+
+
+
+
+
+
+        }
+    private void initDeleteSwitch() {
+        Switch s = findViewById(R.id.switchDelete);
+        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean b) {
+                Boolean status = compoundButton.isChecked();
+                contactAdapter.setDelete(status);
+                contactAdapter.notifyDataSetChanged();
+                //where is this variable initialized?
+            }
+        });
+    }
         }
 
 

@@ -7,24 +7,50 @@
     android:layout_height="match_parent"
     tools:context=".ContactListActivity">
 
-    <TextView
-        android:id="@+id/titleListID"
-        style="@android:style/Widget.DeviceDefault.Light.TextView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:background="#99A2A4"
-        android:fontFamily="@font/roboto"
-        android:shadowColor="#0D0B0B"
-        android:text="Contact List "
-        android:textAlignment="textStart"
-        android:textColor="#FFFCFC"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_height="wrap_content"
+        android:background="toolbar_background">
+
+
+        <TextView
+            android:id="@+id/titleListID"
+            style="@android:style/Widget.DeviceDefault.Light.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="#99A2A4"
+            android:fontFamily="@font/roboto"
+            android:shadowColor="#0D0B0B"
+            android:textAlignment="textStart"
+            android:textColor="#FFFCFC"
+            android:textSize="34sp" />
+
+        <Switch
+            android:id="@+id/switchDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DELETE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.022" />
+
+        <Button
+            android:id="@+id/buttonAddContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NEW"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.005" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
         android:id="@+id/mapButtonID4"
@@ -69,6 +95,6 @@
         app:layout_constraintBottom_toTopOf="@+id/mapButtonID4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.694" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

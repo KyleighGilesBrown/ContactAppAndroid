@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Contacts;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,7 +26,7 @@ public class ContactListActivity extends AppCompatActivity {
             int position = viewHolder.getAdapterPosition();
             int contactId = contacts.get(position).getContactID();
             Intent intent = new Intent(ContactListActivity.this, MainActivity.class);
-            intent.putExtra("contactID",contactId);
+            intent.putExtra("contactid",contactId);
             startActivity(intent);
         }
     };
@@ -50,7 +51,7 @@ public class ContactListActivity extends AppCompatActivity {
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
             contactList.setLayoutManager(layoutManager);
             ContactAdapter contactAdapter = new ContactAdapter(contacts);
-            // contactAdapter.setOnItemClickListener(onItemClickListener);
+            contactAdapter.setOnItemClickListener(onItemClickListener);
             contactList.setAdapter(contactAdapter);
 
         }
@@ -58,6 +59,17 @@ public class ContactListActivity extends AppCompatActivity {
             Toast.makeText(this,"Error retrieving contacts", Toast.LENGTH_LONG).show();
 
         }
+        initAddContactButton();
+    }
+    private void initAddContactButton() {
+        Button newContact = findViewById(R.id.buttonAddContact);
+        newContact.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactListActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
