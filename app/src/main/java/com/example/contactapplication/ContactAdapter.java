@@ -31,7 +31,7 @@ public class ContactAdapter extends RecyclerView.Adapter {
     public class ContactViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewContact;
         public TextView textPhone;
-        public TextView textEmail;
+
 
         public Button deleteButton;
 
@@ -40,7 +40,6 @@ public class ContactAdapter extends RecyclerView.Adapter {
             super(itemView);
             textViewContact = itemView.findViewById(R.id.textContactName);
             textPhone = itemView.findViewById(R.id.textPhoneNumber);
-            textEmail = itemView.findViewById(R.id.textEmail);
             deleteButton =  itemView.findViewById(R.id.buttonDeleteContact);
             itemView.setTag(this);
             itemView.setOnClickListener(mOnItemClickListener);
@@ -53,9 +52,7 @@ public class ContactAdapter extends RecyclerView.Adapter {
             return textPhone;
         }
 
-        public TextView getEmailTextView() {
-            return textEmail;
-        }
+
         public Button getDeleteButton() {
             return deleteButton;
         }
@@ -78,17 +75,17 @@ public class ContactAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ContactViewHolder cvh = (ContactViewHolder) holder;
 
-//        for(int i =0; i < position; i++) {
+
+//        for(int i =-1; i < position; i++) {
 //            if (i % 2 != 0) {
-//                cvh.itemView.setBackgroundColor(Color.RED);
+//                cvh.itemView.setBackgroundColor(Color.WHITE);
 //            }
 //            else {
-//                cvh.itemView.setBackgroundColor(Color.BLUE);
+//                cvh.itemView.setBackgroundColor(Color.LTGRAY);
 //            }
 //        }
         cvh.getContactTextView().setText(contactData.get(position).getEditTextFirstID());
         cvh.getPhoneTextView().setText(contactData.get(position).getEditTextPhone());
-        cvh.getEmailTextView().setText(contactData.get(position).getEditTextEmail());
 
 
         if (isDeleting) {
