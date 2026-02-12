@@ -1,6 +1,7 @@
 package com.example.contactapplication;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ public class ContactAdapter extends RecyclerView.Adapter {
     public class ContactViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewContact;
         public TextView textPhone;
+        public TextView textEmail;
+
         public Button deleteButton;
 
 
@@ -37,6 +40,7 @@ public class ContactAdapter extends RecyclerView.Adapter {
             super(itemView);
             textViewContact = itemView.findViewById(R.id.textContactName);
             textPhone = itemView.findViewById(R.id.textPhoneNumber);
+            textEmail = itemView.findViewById(R.id.textEmail);
             deleteButton =  itemView.findViewById(R.id.buttonDeleteContact);
             itemView.setTag(this);
             itemView.setOnClickListener(mOnItemClickListener);
@@ -47,6 +51,10 @@ public class ContactAdapter extends RecyclerView.Adapter {
         }
         public TextView getPhoneTextView() {
             return textPhone;
+        }
+
+        public TextView getEmailTextView() {
+            return textEmail;
         }
         public Button getDeleteButton() {
             return deleteButton;
@@ -63,18 +71,31 @@ public class ContactAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-
         return new ContactViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ContactViewHolder cvh = (ContactViewHolder) holder;
+
+//        for(int i =0; i < position; i++) {
+//            if (i % 2 != 0) {
+//                cvh.itemView.setBackgroundColor(Color.RED);
+//            }
+//            else {
+//                cvh.itemView.setBackgroundColor(Color.BLUE);
+//            }
+//        }
         cvh.getContactTextView().setText(contactData.get(position).getEditTextFirstID());
         cvh.getPhoneTextView().setText(contactData.get(position).getEditTextPhone());
+        cvh.getEmailTextView().setText(contactData.get(position).getEditTextEmail());
+
 
         if (isDeleting) {
             cvh.getDeleteButton().setVisibility(View.VISIBLE);
+
+
+
             cvh.getDeleteButton().setOnClickListener(new View.OnClickListener() {
 
                 @Override

@@ -11,20 +11,14 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="toolbar_background">
+        android:layout_marginBottom="683dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/grey"
+        >
 
-
-        <TextView
-            android:id="@+id/titleListID"
-            style="@android:style/Widget.DeviceDefault.Light.TextView"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:background="#99A2A4"
-            android:fontFamily="@font/roboto"
-            android:shadowColor="#0D0B0B"
-            android:textAlignment="textStart"
-            android:textColor="#FFFCFC"
-            android:textSize="34sp" />
 
         <Switch
             android:id="@+id/switchDelete"

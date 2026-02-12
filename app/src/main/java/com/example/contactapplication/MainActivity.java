@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         saveContactButton();
         initTextChangeEvents();
         hideKeyboard();
-        initDeleteSwitch();
+
     }
 
     private void contactListButton() {
@@ -386,25 +386,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             editEmail.setText(currentContact.getEditTextEmail());
             birthday.setText(DateFormat.format("MM/dd/yyyy", currentContact.getBirth().getTimeInMillis()).toString());
 
-
-
-
-
-
         }
-    private void initDeleteSwitch() {
-        Switch s = findViewById(R.id.switchDelete);
-        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean b) {
-                Boolean status = compoundButton.isChecked();
-                contactAdapter.setDelete(status);
-                contactAdapter.notifyDataSetChanged();
-                //where is this variable initialized?
-            }
-        });
-    }
         }
 
 
