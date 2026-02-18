@@ -1,6 +1,8 @@
 package com.example.contactapplication;
 
 
+import static android.content.Intent.getIntent;
+
 import com.google.android.gms.location.LocationRequest;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,54 +90,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         settingsButton();
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-//
-//    private void initGetLocationButton() {
-//        Button locationButton = (Button) findViewById(R.id.buttonGetLocation);
-//        locationButton.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                try {
-//                    if (Build.VERSION.SDK_INT >= 23) {
-//                        if (ContextCompat.checkSelfPermission(MapsActivity.this,
-//                                Manifest.permission.ACCESS_FINE_LOCATION) !=
-//                                PackageManager.PERMISSION_GRANTED) {
-//                            if (ActivityCompat.shouldShowRequestPermissionRationale
-//                                    (MapsActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-//                                Snackbar.make(findViewById(R.id.mapID), "MyContactList requires this permission to locate " +
-//                                        "your contacts", Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View v) {
-//                                        ActivityCompat.requestPermissions(
-//                                                MapsActivity.this, new String[]{
-//                                                        android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION);
-//                                    }
-//                                }).show();
-//                            } else {
-//                                ActivityCompat.requestPermissions(MapsActivity.this, new String[]
-//                                        {Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION);
-//                            }
-//                        } else {
-//                            startLocationUpdates();
-//                        }
-//                    }}
-//
-//                       catch(Exception e){
-//                        Toast.makeText(getBaseContext(), "Error requesting permission", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//    });
-//        }
-//
+
 
     private void contactListButton() {
         ImageButton clButton = findViewById(R.id.listButtonID5);
@@ -162,80 +117,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        if ( Build.VERSION.SDK_INT >= 23 &&
-//                ContextCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-//                        PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getBaseContext(),
-//                android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-//                PackageManager.PERMISSION_GRANTED) {
-//            return;
-//        }
-//        try {
-//            locationManager.removeUpdates(gpsListener);
-//            locationManager.removeUpdates(networkListener);
-//s
 //
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
     @Override
     public void onPause() {
         super.onPause();
         stopLocationUpdates();
     }
-//    private void startLocationUpdates() {
-//        if ( Build.VERSION.SDK_INT >= 23 &&
-//        ContextCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-//        PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getBaseContext(),
-//                android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-//                PackageManager.PERMISSION_GRANTED) {
-//                return;
-//        }
-//        try {
-//            locationManager = (LocationManager)getBaseContext().getSystemService(Context.LOCATION_SERVICE);
-//            gpsListener = new LocationListener() {
-//                public void onLocationChanged(Location location) {
-//                    TextView txtLatitude = (TextView) findViewById(R.id.textLatitude);
-//                    TextView txtLongitude = (TextView) findViewById(R.id.textLongitude);
-//                    TextView txtAccuracy = (TextView) findViewById(R.id.textAccuracy);
-//                    txtLatitude.setText(String.valueOf(location.getLatitude()));
-//                    txtLongitude.setText(String.valueOf(location.getLongitude()));
-//                    txtAccuracy.setText(String.valueOf(location.getAccuracy()));
-//
-//                }
-//                public void onStatusChanged(String provider, int status, Bundle extras) {};
-//                public void onProviderEnabled(String provider) {};
-//                public void onProviderDisabled(String provider) {};
-//
-//            };
-//            networkListener = new LocationListener() {
-//                public void onLocationChanged(Location location) {
-//                    TextView txtLatitude = (TextView) findViewById(R.id.textLatitude);
-//                    TextView txtLongitude = (TextView) findViewById(R.id.textLongitude);
-//                    TextView txtAccuracy = (TextView) findViewById(R.id.textAccuracy);
-//                    txtLatitude.setText(String.valueOf(location.getLatitude()));
-//                    txtLongitude.setText(String.valueOf(location.getLongitude()));
-//                    txtAccuracy.setText(String.valueOf(location.getAccuracy()));
-//
-//                }
-//                public void onStatusChanged(String provider, int status, Bundle extras) {};
-//                public void onProviderEnabled(String provider) {};
-//                public void onProviderDisabled(String provider) {};
-//
-//            };
-//            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,networkListener);
-//
-//
-//        }
-//        catch (Exception e) {
-//            Toast.makeText(getBaseContext(), "Error, Location not available", Toast.LENGTH_LONG).show();
-//
-//        }
-//    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
