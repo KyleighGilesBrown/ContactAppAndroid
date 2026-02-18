@@ -1,7 +1,6 @@
 package com.example.contactapplication;
 
 
-import static android.content.Intent.getIntent;
 
 import com.google.android.gms.location.LocationRequest;
 import androidx.annotation.NonNull;
@@ -71,7 +70,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 currentContact = ds.getSpecificContact(extras.getInt("contactid"));
             }
             else {
-                contacts = ds.getContacts("radioNameID", "group1ID");
+                contacts = ds.getContacts("editTextFirstID", "ASC");
             }
             ds.close();
         }
@@ -188,99 +187,117 @@ private void startLocationUpdates() {
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
+            gMap = googleMap;
+            gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            Point size = new Point();
+            getWindowManager().getDefaultDisplay().getSize(size);
+            int measuredWidth = size.x;
+            int measuredHeight = size.y;
 
-    gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-    Point size = new Point();
-    WindowManager w = getWindowManager();
-    w.getDefaultDisplay().getSize(size);
-    int measuredWidth = size.x;
-    int measuredHeight = size.y;
-    if (contacts.size() > 0) {
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (int i =0; i<contacts.size(); i++) {
-            currentContact = contacts.get(i);
-            Geocoder geo = new Geocoder(this);
-            List<Address> addresses = null;
-            String address = currentContact.getEditTextStrAddress() + ", " +
-                    currentContact.getEditTextCityAddress() +  currentContact.getEditTextStateAddress() + ", " +
-                    currentContact.getEditTextZipAddress() + ", " +  currentContact.getEditTextCountryAddress();
+            if (contacts.size() > 0) {
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                boolean hasPoints = false;
 
-        try {
-            addresses = geo.getFromLocationName(address,1);
+                for (int i = 0; i < contacts.size(); i++) {
+                    currentContact = contacts.get(i);
+                    Geocoder geo = new Geocoder(this);
+                    List<Address> addresses = null;
+                    String address = currentContact.getEditTextStrAddress() + ", " +
+                            currentContact.getEditTextCityAddress() + ", " +
+                            currentContact.getEditTextStateAddress() + " " +
+                            currentContact.getEditTextZipAddress() + ", " +
+                            currentContact.getEditTextCountryAddress();
 
-        }
-        catch(IOException e) {
-            e.printStackTrace();
-        }
-        LatLng point = new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude());
-        builder.include(point);
-        gMap.addMarker(new MarkerOptions().position(point).title(currentContact.getEditTextFirstID()).snippet(address));}
-        gMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),measuredWidth,measuredHeight,450));
-    }
-    else {
-        if (currentContact != null) {
-            Geocoder geo = new Geocoder(this);
-            List<Address> addresses = null;
-            String address = currentContact.getEditTextStrAddress() + ", " +
-                    currentContact.getEditTextCityAddress() +  currentContact.getEditTextStateAddress() + ", " +
-                    currentContact.getEditTextZipAddress() + ", " +  currentContact.getEditTextCountryAddress();
-
-            try {
-                addresses = geo.getFromLocationName(address,1);
-
-            }
-            catch(IOException e) {
-                e.printStackTrace();
-            }
-            LatLng point = new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude());
-
-            gMap.addMarker(new MarkerOptions().position(point).title(currentContact.getEditTextFirstID()).snippet(address));
-        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(point,16));
-    }
-        else {
-            AlertDialog alertDialog = new AlertDialog.Builder(
-                    MapsActivity.this).create();
-            alertDialog.setTitle("No Data");
-            alertDialog.setMessage("No data is available for mapping function");
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                } });
-            alertDialog.show();
-            }
-            }
-
-        try {
-            if (Build.VERSION.SDK_INT >= 23) {
-                if (ContextCompat.checkSelfPermission(MapsActivity.this,
-                        Manifest.permission.ACCESS_FINE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale
-                            (MapsActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        Snackbar.make(findViewById(R.id.mapID), "MyContactList requires this permission to locate " +
-                                "your contacts", Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ActivityCompat.requestPermissions(
-                                        MapsActivity.this, new String[]{
-                                                android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION);
-                            }
-                        }).show();
-                    } else {
-                        ActivityCompat.requestPermissions(MapsActivity.this, new String[]
-                                {Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION);
+                    try {
+                        addresses = geo.getFromLocationName(address, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } else {
-                    startLocationUpdates();
-                }
-            }}
 
-        catch(Exception e){
-            Toast.makeText(getBaseContext(), "Error requesting permission", Toast.LENGTH_LONG).show();
+                    if (addresses == null || addresses.isEmpty()) {
+                        Toast.makeText(this, "Could not geocode: " + currentContact.getEditTextFirstID(), Toast.LENGTH_SHORT).show();
+                        continue;
+                    }
+
+                    LatLng point = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+                    builder.include(point);
+                    hasPoints = true;
+                    gMap.addMarker(new MarkerOptions().position(point)
+                            .title(currentContact.getEditTextFirstID())
+                            .snippet(address));
+                }
+
+                if (hasPoints) {
+                    gMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), measuredWidth, measuredHeight, 450));
+                }
+
+            } else if (currentContact != null) {
+                Geocoder geo = new Geocoder(this);
+                List<Address> addresses = null;
+                String address = currentContact.getEditTextStrAddress() + ", " +
+                        currentContact.getEditTextCityAddress() + ", " +
+                        currentContact.getEditTextStateAddress() + " " +
+                        currentContact.getEditTextZipAddress() + ", " +
+                        currentContact.getEditTextCountryAddress();
+
+                try {
+                    addresses = geo.getFromLocationName(address, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (addresses == null || addresses.isEmpty()) {
+                    Toast.makeText(this, "Could not geocode: " + currentContact.getEditTextFirstID(), Toast.LENGTH_SHORT).show();
+                } else {
+                    LatLng point = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+                    gMap.addMarker(new MarkerOptions().position(point)
+                            .title(currentContact.getEditTextFirstID())
+                            .snippet(address));
+                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 16));
+                }
+
+            } else {
+                AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
+                alertDialog.setTitle("No Data");
+                alertDialog.setMessage("No data is available for mapping function");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                alertDialog.show();
+            }
+
+            // Permission handling
+            try {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    if (ContextCompat.checkSelfPermission(MapsActivity.this,
+                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(MapsActivity.this,
+                                Manifest.permission.ACCESS_FINE_LOCATION)) {
+                            Snackbar.make(findViewById(R.id.mapID), "MyContactList requires this permission to locate your contacts",
+                                    Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ActivityCompat.requestPermissions(MapsActivity.this,
+                                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION);
+                                }
+                            }).show();
+                        } else {
+                            ActivityCompat.requestPermissions(MapsActivity.this,
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION);
+                        }
+                    } else {
+                        startLocationUpdates();
+                    }
+                }
+            } catch (Exception e) {
+                Toast.makeText(getBaseContext(), "Error requesting permission", Toast.LENGTH_LONG).show();
+            }
+
+            RadioButton rbNormal = findViewById(R.id.radioButtonNormal);
+            rbNormal.setChecked(true);
         }
-        RadioButton rbNormal = findViewById(R.id.radioButtonNormal);
-        rbNormal.setChecked(true);
-    }
     private void mapTypeButtons() {
         RadioGroup rgMapType = findViewById(R.id.radioGroupMapType);
         rgMapType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
