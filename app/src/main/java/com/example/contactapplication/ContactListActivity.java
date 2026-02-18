@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -49,6 +50,8 @@ public class ContactListActivity extends AppCompatActivity {
 
         initAddContactButton();
         initDeleteSwitch();
+        settingsButton();
+        mapButton();
     }
 
     @Override
@@ -122,6 +125,31 @@ public class ContactListActivity extends AppCompatActivity {
                     contactAdapter.setDelete(status);
                     contactAdapter.notifyDataSetChanged();
                 }
+            }
+        });
+    }
+
+    private void settingsButton() {
+        ImageButton sButton = findViewById(R.id.settingButtonID4);
+        sButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactListActivity.this, SettingsActivity.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+    }
+    private void mapButton() {
+        ImageButton mButton = findViewById(R.id.mapButtonID4);
+        mButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactListActivity.this, MapsActivity.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }
